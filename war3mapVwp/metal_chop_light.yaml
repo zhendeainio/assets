@@ -1,0 +1,20 @@
+# 金属轻砍
+flesh:
+  - "Sound\\Units\\Combat\\MetalLightChopFlesh1.wav"
+  - "Sound\\Units\\Combat\\MetalLightChopFlesh2.wav"
+  - "Sound\\Units\\Combat\\MetalLightChopFlesh3.wav"
+
+metal:
+  - "Sound\\Units\\Combat\\MetalLightChopMetal1.wav"
+  - "Sound\\Units\\Combat\\MetalLightChopMetal2.wav"
+  - "Sound\\Units\\Combat\\MetalLightChopMetal3.wav"
+
+rock:
+  - "Sound\\Units\\Combat\\MetalLightChopStone1.wav"
+  - "Sound\\Units\\Combat\\MetalLightChopStone2.wav"
+  - "Sound\\Units\\Combat\\MetalLightChopStone3.wav"
+
+wood:
+  - "Sound\\Units\\Combat\\MetalLightChopWood1.wav"
+  - "Sound\\Units\\Combat\\MetalLightChopWood2.wav"
+  - "Sound\\Units\\Combat\\MetalLightChopWood3.wav"

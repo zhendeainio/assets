@@ -1,0 +1,20 @@
+# 金属重切
+flesh:
+  - "Sound\\Units\\Combat\\MetalHeavySliceFlesh1.wav"
+  - "Sound\\Units\\Combat\\MetalHeavySliceFlesh2.wav"
+  - "Sound\\Units\\Combat\\MetalHeavySliceFlesh3.wav"
+
+metal:
+  - "Sound\\Units\\Combat\\MetalHeavySliceMetal1.wav"
+  - "Sound\\Units\\Combat\\MetalHeavySliceMetal2.wav"
+  - "Sound\\Units\\Combat\\MetalHeavySliceMetal3.wav"
+
+rock:
+  - "Sound\\Units\\Combat\\MetalHeavySliceStone1.wav"
+  - "Sound\\Units\\Combat\\MetalHeavySliceStone2.wav"
+  - "Sound\\Units\\Combat\\MetalHeavySliceStone3.wav"
+
+wood:
+  - "Sound\\Units\\Combat\\MetalHeavySliceWood1.wav"
+  - "Sound\\Units\\Combat\\MetalHeavySliceWood2.wav"
+  - "Sound\\Units\\Combat\\MetalHeavySliceWood3.wav"

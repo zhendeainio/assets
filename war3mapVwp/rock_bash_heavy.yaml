@@ -1,0 +1,20 @@
+# 岩石重击
+flesh:
+  - "Sound\\Units\\Combat\\RockHeavyBashFlesh1.wav"
+  - "Sound\\Units\\Combat\\RockHeavyBashFlesh2.wav"
+  - "Sound\\Units\\Combat\\RockHeavyBashFlesh3.wav"
+
+metal:
+  - "Sound\\Units\\Combat\\RockHeavyBashMetal1.wav"
+  - "Sound\\Units\\Combat\\RockHeavyBashMetal2.wav"
+  - "Sound\\Units\\Combat\\RockHeavyBashMetal3.wav"
+
+rock:
+  - "Sound\\Units\\Combat\\RockHeavyBashStone1.wav"
+  - "Sound\\Units\\Combat\\RockHeavyBashStone2.wav"
+  - "Sound\\Units\\Combat\\RockHeavyBashStone3.wav"
+
+wood:
+  - "Sound\\Units\\Combat\\RockHeavyBashWood1.wav"
+  - "Sound\\Units\\Combat\\RockHeavyBashWood2.wav"
+  - "Sound\\Units\\Combat\\RockHeavyBashWood3.wav"

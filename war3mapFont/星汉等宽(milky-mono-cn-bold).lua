@@ -1,0 +1,1 @@
+vistring.setFont("星汉等宽(milky-mono-cn-bold)", 0.65, 1.26, 1.2)

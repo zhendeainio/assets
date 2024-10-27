@@ -1,0 +1,20 @@
+# 金属中切
+flesh:
+  - "Sound\\Units\\Combat\\MetalMediumSliceFlesh1.wav"
+  - "Sound\\Units\\Combat\\MetalMediumSliceFlesh2.wav"
+  - "Sound\\Units\\Combat\\MetalMediumSliceFlesh3.wav"
+
+metal:
+  - "Sound\\Units\\Combat\\MetalMediumSliceMetal1.wav"
+  - "Sound\\Units\\Combat\\MetalMediumSliceMetal2.wav"
+  - "Sound\\Units\\Combat\\MetalMediumSliceMetal3.wav"
+
+rock:
+  - "Sound\\Units\\Combat\\MetalMediumSliceStone1.wav"
+  - "Sound\\Units\\Combat\\MetalMediumSliceStone2.wav"
+  - "Sound\\Units\\Combat\\MetalMediumSliceStone3.wav"
+
+wood:
+  - "Sound\\Units\\Combat\\MetalMediumSliceWood1.wav"
+  - "Sound\\Units\\Combat\\MetalMediumSliceWood2.wav"
+  - "Sound\\Units\\Combat\\MetalMediumSliceWood3.wav"

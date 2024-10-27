@@ -1,0 +1,20 @@
+# 金属轻切
+flesh:
+  - "Sound\\Units\\Combat\\MetalLightSliceFlesh1.wav"
+  - "Sound\\Units\\Combat\\MetalLightSliceFlesh2.wav"
+  - "Sound\\Units\\Combat\\MetalLightSliceFlesh3.wav"
+
+metal:
+  - "Sound\\Units\\Combat\\MetalLightSliceMetal1.wav"
+  - "Sound\\Units\\Combat\\MetalLightSliceMetal2.wav"
+  - "Sound\\Units\\Combat\\MetalLightSliceMetal3.wav"
+
+rock:
+  - "Sound\\Units\\Combat\\MetalLightSliceStone1.wav"
+  - "Sound\\Units\\Combat\\MetalLightSliceStone2.wav"
+  - "Sound\\Units\\Combat\\MetalLightSliceStone3.wav"
+
+wood:
+  - "Sound\\Units\\Combat\\MetalLightSliceWood1.wav"
+  - "Sound\\Units\\Combat\\MetalLightSliceWood2.wav"
+  - "Sound\\Units\\Combat\\MetalLightSliceWood3.wav"

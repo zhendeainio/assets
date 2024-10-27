@@ -1,0 +1,20 @@
+# 金属重击
+flesh:
+  - "Sound\\Units\\Combat\\MetalHeavyBashFlesh1.wav"
+  - "Sound\\Units\\Combat\\MetalHeavyBashFlesh2.wav"
+  - "Sound\\Units\\Combat\\MetalHeavyBashFlesh3.wav"
+
+metal:
+  - "Sound\\Units\\Combat\\MetalHeavyBashMetal1.wav"
+  - "Sound\\Units\\Combat\\MetalHeavyBashMetal2.wav"
+  - "Sound\\Units\\Combat\\MetalHeavyBashMetal3.wav"
+
+rock:
+  - "Sound\\Units\\Combat\\MetalHeavyBashStone1.wav"
+  - "Sound\\Units\\Combat\\MetalHeavyBashStone2.wav"
+  - "Sound\\Units\\Combat\\MetalHeavyBashStone3.wav"
+
+wood:
+  - "Sound\\Units\\Combat\\MetalHeavyBashWood1.wav"
+  - "Sound\\Units\\Combat\\MetalHeavyBashWood2.wav"
+  - "Sound\\Units\\Combat\\MetalHeavyBashWood3.wav"

@@ -1,0 +1,20 @@
+# 金属重砍
+flesh:
+  - "Sound\\Units\\Combat\\MetalHeavyChopFlesh1.wav"
+  - "Sound\\Units\\Combat\\MetalHeavyChopFlesh2.wav"
+  - "Sound\\Units\\Combat\\MetalHeavyChopFlesh3.wav"
+
+metal:
+  - "Sound\\Units\\Combat\\MetalHeavyChopMetal1.wav"
+  - "Sound\\Units\\Combat\\MetalHeavyChopMetal2.wav"
+  - "Sound\\Units\\Combat\\MetalHeavyChopMetal3.wav"
+
+rock:
+  - "Sound\\Units\\Combat\\MetalHeavyChopStone1.wav"
+  - "Sound\\Units\\Combat\\MetalHeavyChopStone2.wav"
+  - "Sound\\Units\\Combat\\MetalHeavyChopStone3.wav"
+
+wood:
+  - "Sound\\Units\\Combat\\MetalHeavyChopWood1.wav"
+  - "Sound\\Units\\Combat\\MetalHeavyChopWood2.wav"
+  - "Sound\\Units\\Combat\\MetalHeavyChopWood3.wav"

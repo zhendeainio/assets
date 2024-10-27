@@ -1,0 +1,6 @@
+# 斧头中砍
+wood:
+  - "Sound\\Units\\Combat\\AxeMediumChopWood1.wav"
+  - "Sound\\Units\\Combat\\AxeMediumChopWood2.wav"
+  - "Sound\\Units\\Combat\\AxeMediumChopWood3.wav"
+  - "Sound\\Units\\Combat\\AxeMediumChopWood4.wav"

@@ -1,0 +1,20 @@
+# 金属中砍
+flesh:
+  - "Sound\\Units\\Combat\\MetalMediumChopFlesh1.wav"
+  - "Sound\\Units\\Combat\\MetalMediumChopFlesh2.wav"
+  - "Sound\\Units\\Combat\\MetalMediumChopFlesh3.wav"
+
+metal:
+  - "Sound\\Units\\Combat\\MetalMediumChopMetal1.wav"
+  - "Sound\\Units\\Combat\\MetalMediumChopMetal2.wav"
+  - "Sound\\Units\\Combat\\MetalMediumChopMetal3.wav"
+
+rock:
+  - "Sound\\Units\\Combat\\MetalMediumChopStone1.wav"
+  - "Sound\\Units\\Combat\\MetalMediumChopStone2.wav"
+  - "Sound\\Units\\Combat\\MetalMediumChopStone3.wav"
+
+wood:
+  - "Sound\\Units\\Combat\\MetalMediumChopWood1.wav"
+  - "Sound\\Units\\Combat\\MetalMediumChopWood2.wav"
+  - "Sound\\Units\\Combat\\MetalMediumChopWood3.wav"

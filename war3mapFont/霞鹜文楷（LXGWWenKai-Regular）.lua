@@ -1,0 +1,1 @@
+vistring.setFont("霞鹜文楷（LXGWWenKai-Regular）", 0.65, 1.02, 1.14)

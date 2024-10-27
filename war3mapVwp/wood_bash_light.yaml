@@ -1,0 +1,20 @@
+# 木头轻击
+flesh:
+  - "Sound\\Units\\Combat\\WoodLightBashFlesh1.wav"
+  - "Sound\\Units\\Combat\\WoodLightBashFlesh2.wav"
+  - "Sound\\Units\\Combat\\WoodLightBashFlesh3.wav"
+
+metal:
+  - "Sound\\Units\\Combat\\WoodLightBashMetal1.wav"
+  - "Sound\\Units\\Combat\\WoodLightBashMetal2.wav"
+  - "Sound\\Units\\Combat\\WoodLightBashMetal3.wav"
+
+rock:
+  - "Sound\\Units\\Combat\\WoodLightBashStone1.wav"
+  - "Sound\\Units\\Combat\\WoodLightBashStone2.wav"
+  - "Sound\\Units\\Combat\\WoodLightBashStone3.wav"
+
+wood:
+  - "Sound\\Units\\Combat\\WoodLightBashWood1.wav"
+  - "Sound\\Units\\Combat\\WoodLightBashWood2.wav"
+  - "Sound\\Units\\Combat\\WoodLightBashWood3.wav"
