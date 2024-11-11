@@ -13,7 +13,7 @@ function ui:onSetup()
         self.plateBarH = 0.013
         self.abilityMAX = #keyboard.abilityHotkey()
         self.itemMAX = #keyboard.itemHotkey()
-        self.warehouseMAX = game.warehouseSlotVolume
+        self.warehouseMAX = player.warehouseSlotVolume
         self.warehouseRaw = 4
         self.warehouseSize = 0.03
         self.warehouseMarginW = 0.003
@@ -39,56 +39,55 @@ function ui:onSetup()
     end
     -- events
     do
+        -- 参数变化事件监听参数
+        local listenParams = {
+            "exp", "level", "levelMax", "name",
+            "hp", "hpCur", "mp", "mpCur",
+            "attack", "attackSpeed", "attackSpaceBase", "noAttack",
+            "invulnerable", "defend", "move"
+        }
         player.onSelect(self:kit(), function(evtData)
+            ---@type Unit
+            local old, new = evtData.old, evtData.new
             async.call(evtData.triggerPlayer, function()
+                -- 刷新一些UI
                 self:updatePlate()
                 self:updateAbility()
                 self:updateItem()
-            end)
-            -- 注册变化事件
-            ---@type Unit
-            local old, new = evtData.old, evtData.new
-            if (class.isObject(old, UnitClass)) then
-                old:onEvent(eventKind.unitItemChange, self:kit(), nil)
-                old:onEvent(eventKind.unitAbilityChange, self:kit(), nil)
-            end
-            if (class.isObject(new, UnitClass)) then
-                ---@param ed evtOnUnitItemChangeData
-                new:onEvent(eventKind.unitItemChange, self:kit(), function(ed)
-                    async.call(ed.triggerUnit:owner(), function()
+                -- 注册变化事件
+                if (class.isObject(old, UnitClass)) then
+                    event.asyncUnregister(old, eventKind.unitItemChange, self:kit())
+                    event.asyncUnregister(old, eventKind.unitAbilityChange, self:kit())
+                    for _, k in ipairs(listenParams) do
+                        event.asyncUnregister(old, eventKind.classAfterChange .. k, self:kit())
+                    end
+                end
+                if (class.isObject(new, UnitClass)) then
+                    event.asyncRegister(new, eventKind.unitItemChange, self:kit(), function()
                         self:updateItem()
                     end)
-                end)
-                ---@param ed evtOnUnitAbilityChangeData
-                new:onEvent(eventKind.unitAbilityChange, self:kit(), function(ed)
-                    async.call(ed.triggerUnit:owner(), function()
+                    event.asyncRegister(new, eventKind.unitAbilityChange, self:kit(), function()
                         self:updateAbility()
                     end)
-                end)
-            end
-        end)
-        local changeKeys = {
-            "exp", "level", "levelMax", "name",
-            "hp", "hpCur", "mp", "mpCur",
-            "attack", "attackSpeed", "attackSpaceBase", "defend", "move"
-        }
-        class.registerAfterChange(UnitClass, changeKeys, self:kit(), function(evtData)
-            local p = PlayerLocal()
-            async.call(p, function()
-                if (evtData.triggerObject == p:selection()) then
-                    self:updatePlate()
-                    if (evtData.name == "hpCur" or evtData.name == "mpCur") then
-                        self:updateAbility()
-                        self:updateItem()
+                    ---@param evtData2 eventOnClassAfterChange
+                    local call = function(evtData2)
+                        if (evtData2.triggerUnit == PlayerLocal():selection()) then
+                            self:updatePlate()
+                            if (evtData2.name == "hpCur" or evtData2.name == "mpCur") then
+                                self:updateAbility()
+                                self:updateItem()
+                            end
+                        end
+                    end
+                    for _, k in ipairs(listenParams) do
+                        event.asyncRegister(new, eventKind.classAfterChange .. k, self:kit(), call)
                     end
                 end
             end)
         end)
         -- 仓库变化事件
-        player.onWarehouseChange(self:kit(), function(evtData)
-            async.call(evtData.triggerPlayer, function()
-                self:updateWarehouse()
-            end)
+        event.asyncRegister(PlayerClass, eventKind.playerWarehouseChange, self:kit(), function()
+            self:updateWarehouse()
         end)
     end
     -- plate
@@ -127,13 +126,13 @@ function ui:onSetup()
                     :textAlign(TEXT_ALIGN_CENTER)
                     :fontSize(11)
             elseif (t == "Unit") then
-                self.plateMP = UIBar(kp .. ":mp", self.plate[t], { LAYOUT_ALIGN_CENTER, LAYOUT_ALIGN_RIGHT })
+                self.plateMP = UIBar(kp .. ":mp", self.plate[t], { _layouts = { LAYOUT_ALIGN_CENTER, LAYOUT_ALIGN_RIGHT } })
                     :relation(UI_ALIGN_LEFT_BOTTOM, self.plate[t], UI_ALIGN_LEFT_BOTTOM, -0.0934, 0.002)
                     :textureValue("bar/blue")
                     :fontSize(LAYOUT_ALIGN_CENTER, 10)
                     :fontSize(LAYOUT_ALIGN_RIGHT, 8)
                     :ratio(0, self.plateBarW, self.plateBarH)
-                self.plateHP = UIBar(kp .. ":hp", self.plate[t], { LAYOUT_ALIGN_CENTER, LAYOUT_ALIGN_RIGHT })
+                self.plateHP = UIBar(kp .. ":hp", self.plate[t], { _layouts = { LAYOUT_ALIGN_CENTER, LAYOUT_ALIGN_RIGHT } })
                     :relation(UI_ALIGN_BOTTOM, self.plateMP, UI_ALIGN_TOP, 0, 0.0015)
                     :textureValue("bar/green")
                     :fontSize(LAYOUT_ALIGN_CENTER, 10)
@@ -237,7 +236,10 @@ function ui:onSetup()
                 :relation(UI_ALIGN_CENTER, self.abilityBedding[i], UI_ALIGN_CENTER, 0, 0)
                 :fontSize(10)
                 :hotkeyFontSize(9)
+                :hotkeyRelation(UI_ALIGN_RIGHT_TOP, UI_ALIGN_RIGHT_TOP, -0.004, -0.004)
+                :borderScale(1.05, 1.04)
                 :mask(X_UI_BLACK)
+                :maskAlpha(180)
                 :onEvent(eventKind.uiEnter,
                 function(evtData)
                     if (cursor.isQuoting()) then
@@ -291,7 +293,7 @@ function ui:onSetup()
                     ---@type Ability
                     local ab = storage[i]
                     if (class.isObject(ab, AbilityClass)) then
-                        cursor.quote(ab:targetType(), { ability = ab })
+                        cursor.quote(ab:targetType(), { ability = ab, mouseLeft = true })
                     end
                 end)
                 :onEvent(eventKind.uiRightClick,
@@ -324,7 +326,7 @@ function ui:onSetup()
                         over = function()
                             japi.DZ_FrameSetAlpha(triggerUI:handle(), triggerUI._alpha)
                         end,
-                        ---@param evt evtOnMouseRightClickData
+                        ---@param evt eventOnMouseRightClick
                         rightClick = function(evt)
                             local sel = evt.triggerPlayer:selection()
                             if (class.isObject(sel, UnitClass) and sel:owner() == evt.triggerPlayer) then
@@ -341,7 +343,7 @@ function ui:onSetup()
                                     end
                                 end
                                 if (-1 ~= tarIdx and false == table.equal(ob, tarObj)) then
-                                    sync.send("_xlk_sync_g", { "ability_push", sel:id(), ob:id(), tarIdx })
+                                    sync.send("lk_sync_g", { "ability_push", sel:id(), ob:id(), tarIdx })
                                     sound.vcm("war3_MouseClick1")
                                 else
                                     cursor.quoteOver()
@@ -353,9 +355,6 @@ function ui:onSetup()
                     })
                 end)
                 :show(false)
-            self.abilityBtn[i]._mask:alpha(180)
-            self.abilityBtn[i]._border:size(self.abilitySizeX * 1.05, self.abilitySizeY * 1.04)
-            self.abilityBtn[i]._hotkey:relation(UI_ALIGN_RIGHT_TOP, self.abilityBtn[i], UI_ALIGN_RIGHT_TOP, -0.004, -0.004)
             self.abilityPot[i] = UIText(kitAb .. ':pot:' .. i, self.abilityBtn[i])
                 :relation(UI_ALIGN_LEFT_TOP, self.abilityBtn[i], UI_ALIGN_LEFT_TOP, 0.004, -0.004)
                 :fontSize(9)
@@ -364,7 +363,7 @@ function ui:onSetup()
                 :relation(UI_ALIGN_BOTTOM, self.abilityBtn[i], UI_ALIGN_TOP, 0, 0)
                 :texture('icon/up')
                 :show(false)
-                :onEvent(eventKind.uiLeave, function(_) UITooltips():show(false, 0) end)
+                :onEvent(eventKind.uiLeave, function(_) UITooltips():show(false) end)
                 :onEvent(eventKind.uiEnter,
                 function(evtData)
                     local selection = evtData.triggerPlayer:selection()
@@ -388,7 +387,7 @@ function ui:onSetup()
                         sound.vcm("war3_MouseClick1")
                         local ab = selection:abilitySlot():storage()[i]
                         if (class.isObject(ab, AbilityClass)) then
-                            sync.send("_xlk_sync_g", { "ability_level_up", ab:id() })
+                            sync.send("lk_sync_g", { "ability_level_up", ab:id() })
                             local content = tooltipsAbility(ab, 1)
                             if (nil ~= content) then
                                 content.textAlign = TEXT_ALIGN_LEFT
@@ -425,7 +424,9 @@ function ui:onSetup()
                 :relation(UI_ALIGN_LEFT_TOP, self.item, UI_ALIGN_LEFT_TOP, xo, yo)
                 :size(self.itemSizeX, self.itemSizeY)
                 :fontSize(7.5)
+                :borderScale(1.05, 1.04)
                 :mask(X_UI_BLACK)
+                :maskAlpha(180)
                 :show(false)
                 :onEvent(eventKind.uiLeave,
                 function(evtData)
@@ -482,7 +483,7 @@ function ui:onSetup()
                     if (class.isObject(it, ItemClass)) then
                         local ab = it:bindAbility()
                         if (class.isObject(ab, AbilityClass)) then
-                            cursor.quote(ab:targetType(), { ability = ab })
+                            cursor.quote(ab:targetType(), { ability = ab, mouseLeft = true })
                         end
                     end
                 end)
@@ -516,7 +517,7 @@ function ui:onSetup()
                         over = function()
                             japi.DZ_FrameSetAlpha(triggerUI:handle(), triggerUI._alpha)
                         end,
-                        ---@param evt evtOnMouseRightClickData
+                        ---@param evt eventOnMouseRightClick
                         rightClick = function(evt)
                             local p = evt.triggerPlayer
                             local sel = p:selection()
@@ -545,9 +546,9 @@ function ui:onSetup()
                                 end
                                 if (-1 ~= tarIdx and false == table.equal(ob, tarObj)) then
                                     if (tarType == "item") then
-                                        sync.send("_xlk_sync_g", { "item_push", sel:id(), ob:id(), tarIdx })
+                                        sync.send("lk_sync_g", { "item_push", sel:id(), ob:id(), tarIdx })
                                     elseif (tarType == "warehouse") then
-                                        sync.send("_xlk_sync_g", { "item_to_warehouse", sel:id(), ob:id(), tarIdx })
+                                        sync.send("lk_sync_g", { "item_to_warehouse", sel:id(), ob:id(), tarIdx })
                                     end
                                     sound.vcm("war3_MouseClick1")
                                 else
@@ -560,9 +561,6 @@ function ui:onSetup()
                     })
                 end)
             
-            self.itemBtn[i]._mask:alpha(180)
-            self.itemBtn[i]._border:size(self.itemSizeX * 1.05, self.itemSizeY * 1.04)
-            
             self.itemPot[i] = UIText(kitIt .. ':pot:' .. i, self.itemBtn[i])
                 :relation(UI_ALIGN_LEFT_TOP, self.itemBtn[i], UI_ALIGN_LEFT_TOP, 0.002, -0.002)
                 :fontSize(8)
@@ -571,7 +569,7 @@ function ui:onSetup()
             -- 物品使用次数
             self.itemCharges[i] = UIButton(kitIt .. ':charges:' .. i, self.itemBtn[i])
                 :relation(UI_ALIGN_RIGHT_BOTTOM, self.itemBtn[i], UI_ALIGN_RIGHT_BOTTOM, -0.0014, 0.0014)
-                :texture(TEAM_COLOR_BLP_BLACK)
+                :texture(BLP_COLOR_BLACK)
                 :fontSize(7)
         end
     end
@@ -608,7 +606,7 @@ function ui:onSetup()
         for i, k in ipairs(self.warehouseResAllow) do
             local n = self.warehouseResOpt[k].name
             local opt = self.warehouseResOpt[k]
-            self.warehouseRes[i] = UILabel(kitWh .. ":res" .. k, self.warehouse, true)
+            self.warehouseRes[i] = UILabel(kitWh .. ":res" .. k, self.warehouse, { _autoSize = true })
                 :relation(UI_ALIGN_LEFT_TOP, self.warehouse, UI_ALIGN_LEFT_TOP, opt.x, opt.y)
                 :icon(opt.texture)
                 :textAlign(TEXT_ALIGN_LEFT)
@@ -640,6 +638,7 @@ function ui:onSetup()
                 :relation(UI_ALIGN_LEFT_TOP, self.warehouse, UI_ALIGN_LEFT_TOP, xo, yo)
                 :size(self.warehouseSize, self.warehouseSize)
                 :fontSize(7)
+                :borderScale(1.06, 1.06)
                 :show(false)
                 :onEvent(eventKind.uiLeave,
                 function(evtData)
@@ -669,18 +668,18 @@ function ui:onSetup()
                                     if (ed.key == "item") then
                                         local selection = ed.triggerPlayer:selection()
                                         if (class.isObject(selection, UnitClass)) then
-                                            sync.send("_xlk_sync_g", { "warehouse_to_item", it:id() })
+                                            sync.send("lk_sync_g", { "warehouse_to_item", it:id() })
                                         end
                                     elseif (ed.key == "drop") then
                                         if (it:dropable()) then
                                             local selection = ed.triggerPlayer:selection()
                                             if (class.isObject(selection, UnitClass)) then
-                                                sync.send("_xlk_sync_g", { "item_drop", it:id(), selection:x(), selection:y() })
+                                                sync.send("lk_sync_g", { "item_drop", it:id(), selection:x(), selection:y() })
                                             end
                                         end
                                     elseif (ed.key == "pawn") then
                                         if (it:pawnable()) then
-                                            sync.send("_xlk_sync_g", { "item_pawn", it:id() })
+                                            sync.send("lk_sync_g", { "item_pawn", it:id() })
                                         end
                                     elseif (ed.key == "separate") then
                                     
@@ -712,7 +711,7 @@ function ui:onSetup()
                         over = function()
                             japi.DZ_FrameSetAlpha(triggerUI:handle(), triggerUI._alpha)
                         end,
-                        ---@param evt evtOnMouseRightClickData
+                        ---@param evt eventOnMouseRightClick
                         rightClick = function(evt)
                             local p = evt.triggerPlayer
                             local tarIdx = -1
@@ -726,6 +725,7 @@ function ui:onSetup()
                                     break
                                 end
                             end
+                            local tarUnit
                             if (-1 == tarIdx) then
                                 local sel = p:selection()
                                 if (class.isObject(sel, UnitClass) and sel:owner() == p) then
@@ -735,6 +735,7 @@ function ui:onSetup()
                                         local btn = self.itemBtn[j]
                                         if (isInsideUI(btn, evt.rx, evt.ry, false)) then
                                             tarObj, tarType, tarIdx = it, "item", j
+                                            tarUnit = sel
                                             break
                                         end
                                     end
@@ -742,9 +743,9 @@ function ui:onSetup()
                             end
                             if (-1 ~= tarIdx and false == table.equal(ob, tarObj)) then
                                 if (tarType == "warehouse") then
-                                    sync.send("_xlk_sync_g", { "warehouse_push", ob:id(), tarIdx })
-                                elseif (tarType == "item") then
-                                    sync.send("_xlk_sync_g", { "warehouse_to_item", ob:id(), tarIdx })
+                                    sync.send("lk_sync_g", { "warehouse_push", ob:id(), tarIdx })
+                                elseif (tarType == "item" and nil ~= tarUnit) then
+                                    sync.send("lk_sync_g", { "warehouse_to_item", tarUnit:id(), ob:id(), tarIdx })
                                 end
                                 sound.vcm("war3_MouseClick1")
                             else
@@ -753,11 +754,11 @@ function ui:onSetup()
                         end,
                     })
                 end)
-            self.warehouseButton[i]._border:size(self.warehouseSize * 1.06, self.warehouseSize * 1.06)
+            
             -- 物品使用次数
             self.warehouseCharges[i] = UIButton(kitWh .. ":charges:" .. i, self.warehouseButton[i]._border)
                 :relation(UI_ALIGN_RIGHT_BOTTOM, self.warehouseButton[i], UI_ALIGN_RIGHT_BOTTOM, -0.0011, 0.00146)
-                :texture(TEAM_COLOR_BLP_BLACK)
+                :texture(BLP_COLOR_BLACK)
                 :fontSize(7)
         end
     end

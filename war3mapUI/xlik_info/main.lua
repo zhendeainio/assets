@@ -7,11 +7,9 @@ local ui = UIKit(kit)
 function ui:onSetup()
     
     -- Echo 屏幕信息
-    if (false == isUIKit("xlik_echo")) then
-        self.echo = UINative("UnitMessage", japi.DZ_FrameGetUnitMessage())
-            :absolut(UI_ALIGN_LEFT_BOTTOM, 0.134, 0.18)
-            :size(0, 0.36)
-    end
+    self.echo = UINative("UnitMessage", japi.DZ_FrameGetUnitMessage())
+        :absolut(UI_ALIGN_LEFT_BOTTOM, 0.134, 0.18)
+        :size(0, 0.36)
     
     -- Chat 居中聊天信息
     self.chat = UINative("ChatMessage", japi.DZ_FrameGetChatMessage())

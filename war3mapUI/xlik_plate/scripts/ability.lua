@@ -21,7 +21,7 @@ function ui:updateAbility()
                     local btnTexture = ''
                     local btnBorder = ''
                     local btnText = ''
-                    local btnHotkey = ''
+                    local btnHotkey = 0
                     local btnMaskValue = 0
                     local btnLvUpShow = false
                     local potText = ''
@@ -60,7 +60,7 @@ function ui:updateAbility()
                                     end
                                 end
                                 if (nil == tt or ability.targetType.pas == tt) then
-                                    btnHotkey = ''
+                                    btnHotkey = 0
                                 else
                                     btnHotkey = keyboard.abilityHotkey(i)
                                 end

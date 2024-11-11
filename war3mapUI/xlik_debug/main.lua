@@ -1,5 +1,5 @@
 -- debug提示
-if (XLIK_DEBUG) then
+if (LK_DEBUG) then
     
     collectgarbage("collect")
     local ramCount = collectgarbage("count")
@@ -26,13 +26,13 @@ if (XLIK_DEBUG) then
             :relation(UI_ALIGN_CENTER, UIGame, UI_ALIGN_CENTER, 0, 0)
             :size(2, 2)
             :alpha(100)
-            :texture(TEAM_COLOR_BLP_BLACK)
+            :texture(BLP_COLOR_BLACK)
             :show(false)
         
         ---@type UIBackdrop[]
         self.line = {}
         local graduation = 0.05
-        local texture = TEAM_COLOR_BLP_YELLOW
+        local texture = BLP_COLOR_YELLOW
         local txtColor = "ffe600"
         for i = 1, math.floor(0.6 / graduation - 0.5), 1 do
             local tile = UIBackdrop(kit .. ":horizontal:" .. i, UIGame)

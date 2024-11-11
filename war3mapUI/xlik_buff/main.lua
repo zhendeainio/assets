@@ -34,7 +34,7 @@ function ui:onSetup()
             :fontSize(6.5)
             :maskRatio(1)
             :show(false)
-            :onEvent(eventKind.uiLeave, function(_) UITooltips():show(false, 0) end)
+            :onEvent(eventKind.uiLeave, function(_) UITooltips():show(false) end)
             :onEvent(
             eventKind.uiEnter,
             function()
@@ -121,7 +121,7 @@ function ui:updated(whichUnit)
             --local appending = whichUnit:enchantAppending()
             --if (type(appending) == "table") then
             --    for _, v in ipairs(enchant.keys) do
-            --        ---@type noteEnchantAppendingData
+            --        ---@type enchantAppendingOne
             --        local a = appending[v]
             --        if (type(a) == "table") then
             --            local e = Enchant(v)

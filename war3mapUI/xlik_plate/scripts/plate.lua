@@ -2,7 +2,7 @@
 local ui = UIKit("xlik_plate")
 
 ui.plateInfoLeave = function()
-    UITooltips():show(false, 0)
+    UITooltips():show(false)
 end
 
 ui.plateInfoEnter = function(evtData, field)
