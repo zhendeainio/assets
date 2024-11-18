@@ -86,62 +86,62 @@ function ui:updated(whichUnit)
     self.buff_tips = {}
     if (class.isObject(whichUnit, UnitClass)) then
         if (whichUnit:isAlive()) then
-            ---- 提取 附魔免疫
-            --for _, v in ipairs(enchant.keys) do
-            --    local isImmune = whichUnit:isEnchantImmune(v)
-            --    if (isImmune) then
-            --        local e = Enchant(v)
-            --        local bt = {
-            --            buffTexture = attribute.icon(e:key()),
-            --            signalTexture = 'immune',
-            --            maskTexture = X_UI_NIL,
-            --            alpha = 255,
-            --            text = '',
-            --            tips = { attribute.label(SYMBOL_EI .. e:key()), colour.hex(colour.gold, "持久") }
-            --        }
-            --        table.insert(self.buff_tips, bt)
-            --    end
-            --end
-            ---- 提取 附魔武器
-            --local as = whichUnit:assault()
-            --if (nil ~= as) then
-            --    local damageType = as:damageType()
-            --    if (type(damageType) == "table" and damageType.value ~= "common") then
-            --        table.insert(self.buff_tips, {
-            --            buffTexture = attribute.icon(damageType.value),
-            --            signalTexture = 'weapon',
-            --            maskTexture = X_UI_NIL,
-            --            text = '',
-            --            alpha = 255,
-            --            tips = { attribute.label(SYMBOL_E .. damageType.value .. "Weapon"), colour.hex(colour.gold, "持久") },
-            --        })
-            --    end
-            --end
-            ---- 提取 附魔附着
-            --local appending = whichUnit:enchantAppending()
-            --if (type(appending) == "table") then
-            --    for _, v in ipairs(enchant.keys) do
-            --        ---@type enchantAppendingOne
-            --        local a = appending[v]
-            --        if (type(a) == "table") then
-            --            local e = Enchant(v)
-            --            local bt = {
-            --                buffTexture = attribute.icon(e:key()),
-            --                signalTexture = 'append',
-            --                maskTexture = X_UI_NIL,
-            --                alpha = 255,
-            --            }
-            --            if (a.level < 0) then
-            --                bt.text = ''
-            --                bt.tips = { attribute.label(SYMBOL_E .. e:key() .. "Append"), colour.hex(colour.gold, "持久") }
-            --            else
-            --                bt.text = math.format(a.timer:remain(), 1)
-            --                bt.tips = { attribute.label(SYMBOL_E .. e:key() .. "Append"), a.level .. "级" }
-            --            end
-            --            table.insert(self.buff_tips, bt)
-            --        end
-            --    end
-            --end
+            -- 提取 附魔免疫
+            EnchantForeach(function(v)
+                local isImmune = whichUnit:isEnchantImmune(v)
+                if (isImmune) then
+                    local e = Enchant(v)
+                    local bt = {
+                        buffTexture = attribute.icon(e:key()),
+                        signalTexture = 'immune',
+                        maskTexture = X_UI_NIL,
+                        alpha = 255,
+                        text = '',
+                        tips = { attribute.label(SYMBOL_EI .. e:key()), colour.hex(colour.gold, "持久") }
+                    }
+                    table.insert(self.buff_tips, bt)
+                end
+            end)
+            -- 提取 附魔武器
+            local as = whichUnit:assault()
+            if (nil ~= as) then
+                local damageType = as:damageType()
+                if (type(damageType) == "table" and damageType.value ~= "common") then
+                    table.insert(self.buff_tips, {
+                        buffTexture = attribute.icon(damageType.value),
+                        signalTexture = 'weapon',
+                        maskTexture = X_UI_NIL,
+                        text = '',
+                        alpha = 255,
+                        tips = { attribute.label(SYMBOL_E .. damageType.value .. "Weapon"), colour.hex(colour.gold, "持久") },
+                    })
+                end
+            end
+            -- 提取 附魔附着
+            local eaData = whichUnit:enchantAppendingData()
+            if (type(eaData) == "table") then
+                EnchantForeach(function(v)
+                    ---@type unitEnchantAppendingData
+                    local a = eaData[v]
+                    if (type(a) == "table") then
+                        local e = Enchant(v)
+                        local bt = {
+                            buffTexture = attribute.icon(e:key()),
+                            signalTexture = 'append',
+                            maskTexture = X_UI_NIL,
+                            alpha = 255,
+                        }
+                        if (a.level < 0) then
+                            bt.text = ''
+                            bt.tips = { attribute.label(SYMBOL_E .. e:key() .. "Append"), colour.hex(colour.gold, "持久") }
+                        else
+                            bt.text = math.format(a.timer:remain(), 1)
+                            bt.tips = { attribute.label(SYMBOL_E .. e:key() .. "Append"), a.level .. "级" }
+                        end
+                        table.insert(self.buff_tips, bt)
+                    end
+                end)
+            end
             local catch = BuffCatch(whichUnit, {
                 limit = (self.buff_max - #self.buff_tips),
                 ---@param enumBuff Buff

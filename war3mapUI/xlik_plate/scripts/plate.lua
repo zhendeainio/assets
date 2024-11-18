@@ -51,8 +51,7 @@ ui.plateInfoEnter = function(evtData, field)
         else
             table.insert(tips, _attrLabel(selection, "attack") .. colour.hex(colour.gold, "(快捷键A)"))
             table.insert(tips, _attrLabel(selection, "attackRipple"))
-            --table.insert(tips, _attrLabel(selection, "damageIncrease"))
-            --table.insert(tips, _attrLabel(selection, "enchantMystery"))
+            table.insert(tips, _attrLabel(selection, "enchantMystery"))
         end
     elseif (field == "attackSpeed") then
         if (false == selection:isAttackAble()) then
@@ -102,13 +101,8 @@ ui.plateInfoEnter = function(evtData, field)
         table.insert(tips, _attrLabel(selection, "attackSpaceBase"))
         table.insert(tips, _attrLabel(selection, "attackSpeed"))
         table.insert(tips, _attrLabel(selection, "attackRange"))
-        --table.insert(tips, _attrLabel(selection, "aim"))
     elseif (field == "defend") then
         table.insert(tips, _attrLabel(selection, "defend"))
-        --table.insert(tips, _attrLabel(selection, "avoid"))
-        --table.insert(tips, _attrLabel(selection, "cure"))
-        --table.insert(tips, _attrLabel(selection, "hurtReduction"))
-        --table.insert(tips, _attrLabel(selection, "hurtIncrease"))
     elseif (field == "move") then
         table.insert(tips, _attrLabel(selection, "move") .. colour.hex(colour.gold, "(快捷键M)"))
         table.insert(tips, "移动类型: " .. selection:moveType().label)
