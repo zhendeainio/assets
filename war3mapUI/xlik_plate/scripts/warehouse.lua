@@ -30,20 +30,6 @@ function ui:updateWarehouse()
                 local border = "btn/border-white"
                 local maskValue = 0
                 local charge = math.floor(it:charges())
-                local ab = it:bindAbility()
-                if (class.isObject(ab, AbilityClass)) then
-                    if (ab:coolDown() > 0 and ab:coolingRemain() > 0) then
-                        maskValue = ab:coolingRemain() / ab:coolDown()
-                        text = math.trunc(ab:coolingRemain(), 1)
-                    elseif (ab:isBan() == true) then
-                        local reason = ab:banReason()
-                        maskValue = 1
-                        if (nil ~= reason) then
-                            border = X_UI_NIL
-                            text = reason
-                        end
-                    end
-                end
                 if (charge > 0) then
                     local tw = math.max(0.008, string.len(tostring(charge)) * 0.004)
                     self.warehouseCharges[i]

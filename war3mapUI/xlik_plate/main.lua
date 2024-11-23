@@ -15,15 +15,15 @@ function ui:onSetup()
         self.itemMAX = #keyboard.itemHotkey()
         self.warehouseMAX = player.warehouseSlotVolume
         self.warehouseRaw = 4
-        self.warehouseSize = 0.03
-        self.warehouseMarginW = 0.003
+        self.warehouseSize = 0.038
+        self.warehouseMarginW = 0.0032
         self.warehouseMarginH = 0.002
         self.warehouseResAllow = {}
         self.warehouseResOpt = {
-            lumber = { texture = "interfaces/iconLumber", color = 'FED112', x = 3, y = 2 },
-            gold = { texture = "interfaces/iconGold", color = 'FED112', x = 0.02, y = -0.03 },
-            silver = { texture = "interfaces/iconSilver", color = 'BEC8EB', x = 0.02, y = -0.043 },
-            copper = { texture = "interfaces/iconCopper", color = 'D7AE8E', x = 0.08, y = -0.043 },
+            lumber = { texture = "interfaces/iconLumber", color = 'b6844d', x = 0.024, y = -0.038 },
+            gold = { texture = "interfaces/iconGold", color = 'FED112', x = 0.100, y = -0.038 },
+            silver = { texture = "interfaces/iconSilver", color = 'BEC8EB', x = 0.024, y = -0.054 },
+            copper = { texture = "interfaces/iconCopper", color = 'D7AE8E', x = 0.100, y = -0.054 },
         }
         local res = worth.get()
         res:forEach(function(key, value)
@@ -580,9 +580,10 @@ function ui:onSetup()
         self.warehouseButton = {}
         self.warehouseCharges = {}
         self.warehouseDrag = UIDrag(kitWh .. ":drag", UIGame)
+            :adaptive(true)
             :esc(true)
-            :relation(UI_ALIGN_RIGHT_BOTTOM, UIGame, UI_ALIGN_RIGHT_BOTTOM, -0.17, 0.3)
-            :size(0.16, 0.03)
+            :relation(UI_ALIGN_BOTTOM, UIGame, UI_ALIGN_BOTTOM, 0.21, 0.35)
+            :size(0.20, 0.03)
             :padding(0, 0, 0.13, 0)
             :show(false)
         self.warehouseTips = UIText(kitWh .. ':tips', UIGame)
@@ -597,11 +598,11 @@ function ui:onSetup()
         self.warehouse = UIBackdrop(kitWh, self.warehouseDrag)
             :block(true)
             :relation(UI_ALIGN_TOP, self.warehouseDrag, UI_ALIGN_TOP, 0, 0)
-            :size(0.16, 0.16)
-            :texture("interfaces/tileBlack")
+            :size(0.20, 0.20)
+            :texture("warehouse")
         self.warehouseCell = UIText(kitWh .. ":stgTxt", self.warehouse)
-            :relation(UI_ALIGN_CENTER, self.warehouse, UI_ALIGN_TOP, 0, -0.012)
-            :textAlign(TEXT_ALIGN_RIGHT)
+            :relation(UI_ALIGN_CENTER, self.warehouse, UI_ALIGN_TOP, 0, -0.018)
+            :textAlign(TEXT_ALIGN_CENTER)
             :fontSize(10)
         for i, k in ipairs(self.warehouseResAllow) do
             local n = self.warehouseResOpt[k].name
@@ -632,8 +633,8 @@ function ui:onSetup()
                 end)
         end
         for i = 1, self.warehouseMAX do
-            local xo = 0.016 + (i - 1) % self.warehouseRaw * (self.warehouseSize + self.warehouseMarginW)
-            local yo = -0.06 - (math.ceil(i / self.warehouseRaw) - 1) * (self.warehouseMarginH + self.warehouseSize)
+            local xo = 0.019 + (i - 1) % self.warehouseRaw * (self.warehouseSize + self.warehouseMarginW)
+            local yo = -0.074 - (math.ceil(i / self.warehouseRaw) - 1) * (self.warehouseMarginH + self.warehouseSize)
             self.warehouseButton[i] = UIButton(kitWh .. ":btn" .. i, self.warehouse)
                 :relation(UI_ALIGN_LEFT_TOP, self.warehouse, UI_ALIGN_LEFT_TOP, xo, yo)
                 :size(self.warehouseSize, self.warehouseSize)
