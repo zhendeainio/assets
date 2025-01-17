@@ -214,12 +214,12 @@ function ui:updatePlate()
             end
             self.plateTopName:text(properName)
             self.plateHP
-                :textureValue(hpTexture)
+                :valueTexture(hpTexture)
                 :ratio(hpPercent, self.plateBarW, self.plateBarH)
                 :text(LAYOUT_ALIGN_CENTER, hpTxt)
                 :text(LAYOUT_ALIGN_RIGHT, hpRegen)
             self.plateMP
-                :textureValue(mpTexture)
+                :valueTexture(mpTexture)
                 :ratio(mpPercent, self.plateBarW, self.plateBarH)
                 :text(LAYOUT_ALIGN_CENTER, mpTxt)
                 :text(LAYOUT_ALIGN_RIGHT, mpRegen)
