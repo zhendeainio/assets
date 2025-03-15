@@ -5,7 +5,7 @@ function ui:updateWarehouse()
         local p = PlayerLocal()
         --- 仓存显示
         local qty = #(p:warehouseSlot())
-        local cell
+        local cell = nil
         if (qty >= self.warehouseMAX) then
             cell = "仓库  " .. colour.hex(colour.red, qty .. "/" .. self.warehouseMAX)
         else

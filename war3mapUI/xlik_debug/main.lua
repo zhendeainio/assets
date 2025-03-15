@@ -130,7 +130,7 @@ if (LK_DEBUG) then
         end
         local fps = japi.DZ_GetFPS() * 0.01
         return {
-            colour.hex(colour.gold, "FPS : " .. string.format(fps, 1)),
+            colour.hex(colour.gold, "FPS : " .. string.format("%.2f", fps)),
             colour.hex(colour.skyblue, "平均 : " .. math.format(avg, 3) .. ' MB'),
             colour.hex(colour.littlepink, "最大 : " .. math.format(self.costMax, 3) .. ' MB'),
             "当前 : " .. math.format(cost, 3) .. ' MB',

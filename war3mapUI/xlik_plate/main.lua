@@ -331,7 +331,7 @@ function ui:onSetup()
                             local sel = evt.triggerPlayer:selection()
                             if (class.isObject(sel, UnitClass) and sel:owner() == evt.triggerPlayer) then
                                 local tarIdx = -1
-                                local tarObj
+                                local tarObj = nil
                                 local sto = sel:abilitySlot():storage()
                                 for j = 1, self.abilityMAX do
                                     local ab = sto[j]
@@ -726,7 +726,7 @@ function ui:onSetup()
                                     break
                                 end
                             end
-                            local tarUnit
+                            local tarUnit = nil
                             if (-1 == tarIdx) then
                                 local sel = p:selection()
                                 if (class.isObject(sel, UnitClass) and sel:owner() == p) then

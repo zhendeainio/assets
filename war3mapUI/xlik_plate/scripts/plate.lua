@@ -202,7 +202,7 @@ function ui:updatePlate()
             elseif (mpRegen < 0) then
                 mpRegen = colour.hex(colour.red, mpRegen)
             end
-            local mpPercent
+            local mpPercent = nil
             local mpTxt = mpCur .. " / " .. mp
             local mpTexture = "bar/blue"
             if (mp == 0) then
