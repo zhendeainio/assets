@@ -336,7 +336,7 @@ function ui:onSetup()
                                 for j = 1, self.abilityMAX do
                                     local ab = sto[j]
                                     local btn = self.abilityBtn[j]
-                                    if (isInsideUI(btn, evt.rx, evt.ry, false)) then
+                                    if (btn:isInside(evt.rx, evt.ry, false)) then
                                         tarIdx = j
                                         tarObj = ab
                                         break
@@ -528,7 +528,7 @@ function ui:onSetup()
                                 for j = 1, self.itemMAX do
                                     local it = sto[j]
                                     local btn = self.itemBtn[j]
-                                    if (isInsideUI(btn, evt.rx, evt.ry, false)) then
+                                    if (btn:isInside(evt.rx, evt.ry, false)) then
                                         tarObj, tarType, tarIdx = it, "item", j
                                         break
                                     end
@@ -538,7 +538,7 @@ function ui:onSetup()
                                     for w = 1, self.warehouseMAX do
                                         local it = sto[w]
                                         local btn = self.warehouseButton[w]
-                                        if (isInsideUI(btn, evt.rx, evt.ry, false)) then
+                                        if (btn:isInside(evt.rx, evt.ry, false)) then
                                             tarObj, tarType, tarIdx = it, "warehouse", w
                                             break
                                         end
@@ -721,7 +721,7 @@ function ui:onSetup()
                             for w = 1, self.warehouseMAX do
                                 local it = sto[w]
                                 local btn = self.warehouseButton[w]
-                                if (isInsideUI(btn, evt.rx, evt.ry, false)) then
+                                if (btn:isInside(evt.rx, evt.ry, false)) then
                                     tarObj, tarType, tarIdx = it, "warehouse", w
                                     break
                                 end
@@ -734,7 +734,7 @@ function ui:onSetup()
                                     for j = 1, self.itemMAX do
                                         local it = sto[j]
                                         local btn = self.itemBtn[j]
-                                        if (isInsideUI(btn, evt.rx, evt.ry, false)) then
+                                        if (btn:isInside(evt.rx, evt.ry, false)) then
                                             tarObj, tarType, tarIdx = it, "item", j
                                             tarUnit = sel
                                             break
